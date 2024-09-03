@@ -48,12 +48,12 @@ scene.add(stars)
 // Create Earth
 const earthGeometry = new THREE.SphereGeometry(5, 50, 50)
 const earthMaterial = new THREE.MeshBasicMaterial()
-earthMaterial.map = new THREE.TextureLoader().load('./texture/earth-uv.jpg')
+earthMaterial.map = new THREE.TextureLoader().load('/earth-uv.jpg')
 const earth = new THREE.Mesh(earthGeometry, earthMaterial)
 scene.add(earth)
 
 // Create Ambient Light
-const ambientLight = new THREE.AmbientLight(0xffffff, 1)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
 scene.add(ambientLight)
 
 // Create Group for Earth
@@ -67,10 +67,10 @@ const atmosphereMaterial = new THREE.MeshBasicMaterial({
   color: 0x3BF7FF,
   transparent: true,
   opacity: 0.1,
-  side: THREE.BackSide,
+  side: THREE.FrontSide,
 })
 const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial)
-scene.add(atmosphere)
+group.add(atmosphere)
 
 // Create population box geometry
 function createBox(lat, lng) {
@@ -141,11 +141,6 @@ gsap.to(group.rotation, {
   ease: 'linear',
 })
 
-// Create Orbit Controls
-const controls = new OrbitControls(camera, renderer.domElement)
-// min distance, max distance
-controls.minDistance = 13
-controls.maxDistance = 20
 
 // Create async function to get countries
 async function init() {
