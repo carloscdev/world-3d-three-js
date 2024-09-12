@@ -8,11 +8,11 @@
 // Oceania
 
 const CONTINENTS = {
-  'NA': 'North America',
-  'AN': 'Antarctica',
-  'EU': 'Europe',
   'AF': 'Africa',
+  'AN': 'Antarctica',
   'AS': 'Asia',
+  'EU': 'Europe',
+  'NA': 'North America',
   'SA': 'South America',
   'OC': 'Oceania',
 }

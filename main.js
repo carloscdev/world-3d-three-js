@@ -84,7 +84,7 @@ function createBox(data) {
       Math.max(0.1, 0.2 * scale),
       Math.max(0.1, 0.2 * scale),
       Math.max(zScale, 0.4 * Math.random())
-  ),
+    ),
     new THREE.MeshBasicMaterial({
       color: 0x3BF7FF,
       opacity: 0.4,
@@ -134,13 +134,14 @@ gsap.to(group.rotation, {
   ease: 'power4.out',
   onComplete: () => {
     group.rotation.y = 0
+    group.rotation.x = 0
   }
 })
 
 
 // Create async function to get countries
 async function init() {
-  const countries = getCountries(CONTINENTS.AS)
+  const countries = getCountries(CONTINENTS.AF)
   countries.forEach((country) => {
     createBox(country)
   })
@@ -149,3 +150,59 @@ init()
 
 // Create Events
 new Events({ camera, renderer, group, mouse, canvas, popUpEl, raycaster, earth })
+
+// Create a select element with continents
+const continentsContainer = document.querySelector('#continentsContainer')
+const select = document.createElement('select')
+select.innerHTML = `<option value="${CONTINENTS.AF}">${CONTINENTS.AF}</option>
+<option value="${CONTINENTS.AS}">${CONTINENTS.AS}</option>
+<option value="${CONTINENTS.AN}">${CONTINENTS.AN}</option>
+<option value="${CONTINENTS.EU}">${CONTINENTS.EU}</option>
+<option value="${CONTINENTS.NA}">${CONTINENTS.NA}</option>
+<option value="${CONTINENTS.OC}">${CONTINENTS.OC}</option>
+<option value="${CONTINENTS.SA}">${CONTINENTS.SA}</option>`
+continentsContainer.appendChild(select)
+
+// Add event listener to select element
+select.addEventListener('change', (e) => {
+  const value = e.target.value;
+  const continent = value; // assuming 'getCountries' expects the continent string
+
+  // Filter existing boxes based on continent
+  group.children.forEach((child) => {
+    const keepBox = child.country && child.country.split(' ')[0] === continent; // check flag
+    child.visible = keepBox; // hide boxes for other continents
+  });
+
+  // Potentially load new countries if needed (optional)
+  const countries = getCountries(value);
+  // Calculate continent center
+  const center = calculateContinentCenter(countries);
+  rotateTo(center.lat, center.lng);
+  // Create new boxes
+  countries.forEach((country) => {
+    createBox(country);
+  });
+
+});
+
+// Function to calculate the center of the continent, calculate the average latitude and longitude
+function calculateContinentCenter(countries) {
+  return {
+    lat: countries[0].lat,
+    lng: countries[0].lng,
+  };
+}
+
+// Function to rotate the group to face the continent center
+function rotateTo(lat, lng) {
+  const latitude = (lat / 180) * Math.PI;
+  const longitude = (lng / 180) * Math.PI;
+  console.log(latitude, longitude)
+  gsap.to(group.rotation, {
+    x: -latitude,
+    y: -longitude,
+    duration: 5,
+    ease: 'power4.out',
+  });
+}

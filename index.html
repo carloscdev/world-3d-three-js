@@ -8,13 +8,17 @@
     <title>World - Carlos Córdova</title>
   </head>
   <body class="h-screen w-screen">
-    <div id="popUpEl" class="bg-black bg-opacity-75 fixed px-4 py-2 rounded-lg">
+    <div id="popUpEl" class="bg-[#11131D] bg-opacity-75 fixed px-4 py-2 rounded-lg">
       <h2 class="text-white text-xs">
         <span id="populationEl"></span>
       </h2>
-      <p id="populationValueEl" class="text-white font-bold text-lg">123123</p>
+      <p id="populationValueEl" class="text-white font-bold text-lg"></p>
     </div>
     <canvas id="world" class="h-full w-full"></canvas>
+    <div class="
+      fixed z-10
+      top-12 left-0 right-0 mx-auto flex items-center justify-center
+    " id="continentsContainer"></div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>

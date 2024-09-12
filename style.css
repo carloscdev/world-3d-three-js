@@ -10,3 +10,13 @@ body {
   background-attachment: fixed;
   background-position: center;
 }
+
+select {
+  width: 250px;
+  height: 50px;
+  background-color: #11131D;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  padding: 0 10px;
+}
